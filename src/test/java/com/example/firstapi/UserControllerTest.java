@@ -7,6 +7,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.ArgumentMatchers.eq;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -50,5 +53,31 @@ public class UserControllerTest {
                         .content(jsonValide))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Thomas"));
+    }
+
+    @Test
+    void updateUser_devrait_renvoyer_200_et_user_modifie() throws Exception {
+        // ARRANGE
+        User updatedUser = new User("Pierre", "Architecte");
+        // On dit au mock : quand on update l'ID 1, renvoie l'user modifié
+        when(service.updateUser(eq(1L), any(User.class))).thenReturn(updatedUser);
+
+        // ACT & ASSERT
+        mockMvc.perform(put("/users/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\": \"Pierre\", \"role\": \"Architecte\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.role").value("Architecte"));
+    }
+
+    @Test
+    void deleteUser_devrait_renvoyer_204() throws Exception {
+        // ARRANGE
+        // Pour une méthode void, on dit "ne fais rien" (juste pour que ça ne plante pas)
+        doNothing().when(service).deleteUser(1L);
+
+        // ACT & ASSERT
+        mockMvc.perform(delete("/users/1"))
+                .andExpect(status().isNoContent()); // Vérifie le code 204
     }
 }

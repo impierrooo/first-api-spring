@@ -32,4 +32,12 @@ public class User {
     public Long getId() { return id; }
     public String getName() { return name; }
     public String getRole() { return role; }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

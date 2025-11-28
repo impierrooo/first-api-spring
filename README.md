@@ -15,11 +15,15 @@ Ce projet démontre une architecture en couches (N-Tiers), la conteneurisation, 
 
 ## ✨ Fonctionnalités
 
-* ✅ **CRUD Complet** : Création, Lecture, (Mise à jour et Suppression à venir) d'utilisateurs.
+* ✅ **CRUD Complet** : Gestion totale des utilisateurs via les verbes HTTP standards :
+    * **POST** : Création avec validation.
+    * **GET** : Lecture (Liste ou par ID).
+    * **PUT** : Mise à jour des informations.
+    * **DELETE** : Suppression sécurisée.
 * 🛡️ **Validation des données** : Utilisation de Jakarta Validation (`@NotBlank`, `@Size`) pour protéger l'intégrité de la BDD.
-* 🧪 **Tests Unitaires** : Couverture des couches Service et Controller pour garantir la non-régression (Mockito & MockMvc).
+* 🧪 **Tests Unitaires** : Couverture complète des couches Service et Controller (Create, Read, Update, Delete) avec Mockito & MockMvc.
 * 🐋 **Dockerisé** : Base de données PostgreSQL instanciée via Docker Compose.
-* 🔍 **Gestion des erreurs** : Retours HTTP cohérents (404 Not Found, 400 Bad Request).
+* 🔍 **Gestion des erreurs** : Retours HTTP cohérents (404 Not Found, 400 Bad Request, 204 No Content).
 * 📖 **Documenté** : Interface Swagger UI accessible pour tester l'API visuellement.
 
 ## 🚀 Comment lancer le projet
@@ -51,10 +55,10 @@ L'API sera accessible sur : `http://localhost:8080`
 
 ## 🧪 Lancer les Tests
 
-Le projet inclut une suite de tests unitaires utilisant **JUnit 5** et **Mockito** pour isoler les composants :
+Le projet inclut une suite de tests unitaires utilisant **JUnit 5** et **Mockito** pour garantir la non-régression :
 
 * **Service Layer :** Test de la logique métier avec Mock du Repository.
-* **Controller Layer :** Test des endpoints HTTP avec `MockMvc`.
+* **Controller Layer :** Test des endpoints HTTP et des codes retours avec `MockMvc`.
 
 Pour exécuter tous les tests :
     ```bash
